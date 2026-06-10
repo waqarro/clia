@@ -39,7 +39,9 @@ class DiscoveryProtocol(asyncio.DatagramProtocol):
                     continue
                 
                 packet_type = packet.get("type")
-                ip = packet.get("ip", addr[0])
+                ip = packet.get("ip")
+                if not ip or ip == "127.0.0.1":
+                    ip = addr[0]
                 port = packet.get("port")
                 groups = packet.get("groups", [])
                 

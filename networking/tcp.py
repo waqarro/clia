@@ -103,7 +103,9 @@ class TcpService:
                             self.ui_msg_callback(packet)
                             
                 elif packet_type == "discovery":
-                    ip = packet.get("ip", writer.get_extra_info('peername')[0])
+                    ip = packet.get("ip")
+                    if not ip or ip == "127.0.0.1":
+                        ip = writer.get_extra_info('peername')[0]
                     port = packet.get("port")
                     groups = packet.get("groups", [])
                     
